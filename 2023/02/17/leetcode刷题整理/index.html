@@ -4,8 +4,9 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="leetcode刷题整理, 山姆大叔的学习空间">
-    <meta name="description" content="">
+    <meta name="keywords" content="leetcode刷题整理(随时补充), 山姆大叔的学习空间">
+    <meta name="description" content="1. 差分法1.1 航班预定统计这里有n个航班，它们分别从1到n进行编号。
+有一份航班预订表 bookings，表中第i条预订记录:$$bookings[i] &amp;#x3D; [first_i,last_i,seats_i]$$意味着在从fi">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +18,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>leetcode刷题整理 | 山姆大叔的学习空间</title>
+    <title>leetcode刷题整理(随时补充) | 山姆大叔的学习空间</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -334,12 +335,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">leetcode刷题整理</h1>
+                    <h1 class="description center-align post-title">leetcode刷题整理(随时补充)</h1>
                 </div>
             </div>
         </div>
@@ -396,7 +397,43 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <h1 id="1-差分法"><a href="#1-差分法" class="headerlink" title="1. 差分法"></a>1. 差分法</h1><h2 id="1-1-航班预定统计"><a href="#1-1-航班预定统计" class="headerlink" title="1.1 航班预定统计"></a>1.1 航班预定统计</h2><p>这里有n个航班，它们分别从1到n进行编号。</p>
+<p>有一份航班预订表 <code>bookings</code>，表中第i条预订记录:<br>$$<br>bookings[i] &#x3D; [first_i,last_i,seats_i]<br>$$<br>意味着在从<code>firsti</code>到<code> lasti</code>（包含<code>firsti</code>和<code>lasti</code>）的 每个航班 上预订了<code>seatsi</code>个座位。</p>
+<p>请你返回一个长度为 的数组 <code>answer</code>，其中<code>answer[i]</code> 是航班 <code>i</code>上预订的座位总数。</p>
+<p>示例1：</p>
+<blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">输入：bookings = [[1,2,10],[2,3,20],[2,5,25]], n = 5</span><br><span class="line">输出：[10,55,45,25,25]</span><br><span class="line">解释：</span><br><span class="line">航班编号        1   2   3   4   5</span><br><span class="line">预订记录 1 ：   10  10</span><br><span class="line">预订记录 2 ：       20  20</span><br><span class="line">预订记录 3 ：       25  25  25  25</span><br><span class="line">总座位数：      10  55  45  25  25</span><br><span class="line">因此，answer = [10,55,45,25,25]</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>示例2：</p>
+<blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">输入：bookings = [[1,2,10],[2,2,15]], n = 2</span><br><span class="line"></span><br><span class="line">输出：[10,25]</span><br><span class="line"></span><br><span class="line">解释：</span><br><span class="line">航班编号        1   2</span><br><span class="line">预订记录 1 ：   10  10</span><br><span class="line">预订记录 2 ：       15</span><br><span class="line">总座位数：      10  25</span><br><span class="line">因此，answer = [10,25]</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>提示：</p>
+<blockquote>
+<ul>
+<li><code>1 &lt;= n &lt;= 2 * 104</code></li>
+<li><code>1 &lt;= bookings.length &lt;= 2 * 104</code></li>
+<li><code>bookings[i].length == 3</code></li>
+<li><code>1 &lt;= firsti &lt;= lasti &lt;= n</code></li>
+<li><code>1 &lt;= seatsi &lt;= 104</code></li>
+</ul>
+</blockquote>
+<p>题解（目前参考 宫水三叶题解，此次仅为自己记录，后续有自己理解再修改）：</p>
+<p>本题只涉及「区间修改 + 单点查询」，属于「区间求和」问题中的入门难度。</p>
+<p>此处可以再总结一下（加粗字体为最佳方案）：</p>
+<ul>
+<li>数组不变，区间查询：<strong>前缀和</strong>、树状数组、线段树；</li>
+<li>数组单点修改，区间查询：<strong>树状数组</strong>、线段树；</li>
+<li>数组区间修改，单点查询：<strong>差分</strong>、线段树；</li>
+<li>数组区间修改，区间查询：<strong>线段树</strong>。</li>
+</ul>
+<p>注意：上述总结是对于一般性而言的（能直接解决的），对标的是模板问题。但存在经过一些经过“额外”操作，对问题进行转化，从而使用别的解决方案求解的情况。</p>
+<p>例如某些问题，我们可以先对原数组进行差分，然后使用树状数组，也能解决区间修改问题。</p>
+<p>或者使用多个树状数组来维护多个指标，从而实现类似线段树的持久化标记操作。</p>
+<p>但这些不属于一般性，所以就不添加到总结中了。</p>
+<p>本题只涉及「区间修改 + 单点查询」，因此是一道「差分」的模板题。</p>
+<p>「差分」可以看做是求「前缀和」的逆向过程。</p>
+
                 
             </div>
             <hr/>
@@ -545,9 +582,9 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="leetcode刷题整理">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="leetcode刷题整理(随时补充)">
                         
-                        <span class="card-title">leetcode刷题整理</span>
+                        <span class="card-title">leetcode刷题整理(随时补充)</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
